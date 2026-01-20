@@ -9,5 +9,3 @@ print(f'{year}생은 {age}살 입니다')
 pi = 3.14
 degrees = 36.5
 root = 1414e-3 # 1.414
-
-print(root)
