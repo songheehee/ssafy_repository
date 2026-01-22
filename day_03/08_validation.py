@@ -300,7 +300,6 @@ black_list = [
 ]
 
 def is_validation(user):
-    result = True
     false_data = []
 
     if user["company"] in black_list:
@@ -309,24 +308,20 @@ def is_validation(user):
     
     if user["blood_group"] not in blood_types:
         false_data.append("blood_group")
-        result = False
 
     if "@" not in user["mail"]:
         false_data.append("mail")
-        result = False
 
     if len(user["name"]) < 2 or len(user["name"]) > 30:
         false_data.append("name")
-        result = False
 
     if len(user["website"]) == 0:
         false_data.append("website")
-        result = False
 
-    if result:
-        return result
+    if false_data:
+        return False, false_data
     else:
-        return result, false_data
+        return True
 
 
 def create_user(user_data):
@@ -336,15 +331,17 @@ def create_user(user_data):
     for user in user_data:
         result = is_validation(user)
 
-        if(result is True):
-            user_list.append(user)
-        else:
+        if result == "blocked":
             false_cnt += 1
+            continue
+        else:
+            if result is not True:
+                false_cnt += 1
 
-            if(result[0] is False):
                 for key in result[1]:
                     user[key] = None
-                user_list.append(user)
+                    
+            user_list.append(user)
     
     print(f"잘못된 데이터로 구성된 유저의 수는 {false_cnt}입니다.")
     print(user_list)
