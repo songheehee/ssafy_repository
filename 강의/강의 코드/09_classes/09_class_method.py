@@ -7,7 +7,9 @@ class Person:
         Person.increase_population()
 
     # 클래스 메서드
-    pass
+    @classmethod
+    def increase_population(cls):
+        cls.population += 1
 
 
 # 인스턴스 생성
@@ -15,4 +17,4 @@ person1 = Person('Alice')
 person2 = Person('Bob')
 
 # 클래스 변수 접근
-pass
+print(Person.population)  # 2
